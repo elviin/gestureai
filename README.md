@@ -1,5 +1,8 @@
 # gestureai
-The project implements an iOS application that integrates SFSpeechRecognizer together with ChatGPT functionality. You can control or command the application with your natural language.
+The project implements an iOS application that integrates SFSpeechRecognizer together with ChatGPT functionality. You can control or command the application with your natural language. 
+
+### The speech to text recognition
+An SFTranscription extension is used to add two new variables to recognise sentences in natural speech: newSentenceStarted, lastClosedSentence. The time between two sentences is set to 1 second.
 
 ### Example of the annotation
 Example code of the annotation that could be later a candidate for an SDK:
