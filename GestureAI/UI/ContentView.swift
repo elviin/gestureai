@@ -8,6 +8,11 @@
 import SwiftUI
 import ChatGPTSwift
 
+class AppState: ObservableObject {
+    @Published var needsRefresh: Bool = false
+    @Published var defaultInstructionsSet: Bool = false
+}
+
 extension View {
 	@ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
 		if condition {
@@ -21,6 +26,7 @@ extension View {
 struct ContentView: View {
 	@State var lastSentence: String?
 	@State var gesture: String?
+    @StateObject var appState = AppState()
 	@StateObject var webservice = WebService()
 	@StateObject var speech2Text = Speech2Text()
 	@StateObject var frameTracker = GlobalFrameTracker()
@@ -29,7 +35,7 @@ struct ContentView: View {
 			OnlineShopView()
 				.environmentObject(frameTracker)
 				.environmentObject(webservice)
-
+                .environmentObject(appState)
 		}
 			.onReceive(speech2Text.$transcript) { sentence in
 				guard !sentence.isEmpty else {
@@ -47,7 +53,7 @@ struct ContentView: View {
 						print("ChatGPT: \(response)")
 						if 	let instruction = response.instruction,
 							let command = frameTracker.commands[instruction.id] {
-							if let key = instruction.key {
+                            if let key = instruction.key {
 								command(.string(key))
 							} else {
 								command(.none)

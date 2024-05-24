@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FFCAF342BFF0A6D00D47FDD /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCAF332BFF0A6D00D47FDD /* APIKey.swift */; };
 		8A5E57AE2B9A179500C769D2 /* GestureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5E57AD2B9A179500C769D2 /* GestureGenerator.swift */; };
 		8A70A96F2B7EAC7B007569D6 /* GestureAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70A96E2B7EAC7B007569D6 /* GestureAIApp.swift */; };
 		8A70A9712B7EAC7B007569D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A70A9702B7EAC7B007569D6 /* ContentView.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5FFCAF332BFF0A6D00D47FDD /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		8A5E57AD2B9A179500C769D2 /* GestureGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureGenerator.swift; sourceTree = "<group>"; };
 		8A70A96B2B7EAC7B007569D6 /* GestureAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GestureAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A70A96E2B7EAC7B007569D6 /* GestureAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureAIApp.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				8ADA0D0F2B9877D60085D964 /* WebService.swift */,
+				5FFCAF332BFF0A6D00D47FDD /* APIKey.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				8AF6EE792B9FC99C004E8CAD /* GlobalFrameTracker.swift in Sources */,
 				8AF6EE802B9FCB02004E8CAD /* ItemDetailView.swift in Sources */,
 				8A70A96F2B7EAC7B007569D6 /* GestureAIApp.swift in Sources */,
+				5FFCAF342BFF0A6D00D47FDD /* APIKey.swift in Sources */,
 				8AF6EE7E2B9FCADC004E8CAD /* Item.swift in Sources */,
 				8A5E57AE2B9A179500C769D2 /* GestureGenerator.swift in Sources */,
 				8ADA0D102B9877D70085D964 /* WebService.swift in Sources */,

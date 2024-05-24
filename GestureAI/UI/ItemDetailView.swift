@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ItemDetailView: View {
+    @EnvironmentObject var appState: AppState
 	@EnvironmentObject var webservice: WebService
 	@EnvironmentObject var frameTracker: GlobalFrameTracker
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -36,7 +37,8 @@ struct ItemDetailView: View {
 						.aspectRatio(contentMode: .fit)
 						.foregroundColor(.blue)
 				}
-				.annotate(label: "The main back button. You can use this button to go back from this detail screen.", command: { _ in self.presentationMode.wrappedValue.dismiss()
+				.annotate(label: "The main back button. You can use this button to go back from this detail screen.", command: { _ in 
+                    self.presentationMode.wrappedValue.dismiss()
 				}, type: .button, screen: "Detail")
 			}
 		})
@@ -57,5 +59,9 @@ struct ItemDetailView: View {
 				}
 			}
 		}
+        .onDisappear {
+            // Signal that we need to refresh the llm context to the main screen.
+            appState.needsRefresh = true
+        }
 	}
 }

@@ -34,8 +34,8 @@ class GlobalFrameTracker: ObservableObject {
 
 	func mapInstructions(screen: String) -> String {
   """
-  --- Control Map For "\(screen.capitalized)"  ---
-  These are additional controls that are part of the screen "\(screen)":
+  You are now in the screen "\(screen.capitalized)"
+  Forget previous mapping and use the following control mapping:
   \(createControlsMap(in: screen))
   On this prompt reply just with "OK - MAP".
   """
@@ -73,16 +73,7 @@ class GlobalFrameTracker: ObservableObject {
   "color" : null,
   "accessibility" : null,
   "id" : "97439C4E-C8C7-4E37-A6C4-405A0B1C3A07",
-  "frame" : [
-  [
-   -11,
-   -15
-  ],
-  [
-   23,
-   30
-  ]
-  ],
+  "frame" : [[-11, -15],[23,30]],
   "title" : null,
   "image" : null,
   "annotation" : "Back button leading from the item detail to the shop home page.",
@@ -103,6 +94,12 @@ class GlobalFrameTracker: ObservableObject {
    "id": "B25CEC9E-9C0E-484E-B933-A67A5C9FC10F"
    "key": "car" // item used in a text field
   }
+  
+  After not being satisfied with the search (either saying go back, clean the search), return
+  {
+   "id": "B25CEC9E-9C0E-484E-B933-A67A5C9FC10F"
+   "key": "" // just empty string
+  }
 
   or in case of a scroll bar control:
 
@@ -121,7 +118,7 @@ class GlobalFrameTracker: ObservableObject {
   The key value can be missing if that does not make sense to send any key value, only the id, like in case of a simple button. When a negative command is being requested like no, no, or go back, then send key with empty string. It can happend when the serach textfield is used.
 
   If you do not understand the context, even after several inputs from the user, then just reply OK and wait with the answer untill it makes sense to you what control the user wants to use.
-
+  
   It can happen that user is changing topic as you are probably not the only agent the user interact with. Take your time with hasty replies. Then simply answer 'OK' and nothing else.
 
   In case that there is no button or menu related to a wanted item, and it seems that the user wants to search, then just use the search control id.back
@@ -129,6 +126,11 @@ class GlobalFrameTracker: ObservableObject {
   During the application use, we switch the screens. you should know, that the controls should be selected for the Detail screen, if we have moved to the Detail screen, and from the Main screen controls, when we moved to the Main screen.
 
   Do not apologise in case you are not sure. Just reply OK and nothing else. You will understand the context later and decide better for the control id.
+  
+  Do not reply answers similar to this: 
+  - I'm glad you find that helpful! If you have any more requests or need assistance, feel free to let me know.
+  or this:
+  - You 're welcome! If you have any more questions in the future, feel free to ask. Have a great day!
 
   If you are asked to go back, it can happend as noted above with a text field, or also it can be an instruction to go back from a screen, like from the detail screen to the main screen.
 

@@ -20,12 +20,12 @@ struct Answer {
 
 class WebService: ObservableObject {
 	let offline = false
-	let api = ChatGPTAPI(apiKey: "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") // example, create yours in Open AI API section
+    let api = ChatGPTAPI(apiKey: Constants.apiKey)
 
 	public func sendMessage(text: String,
-							model: String = ChatGPTAPI.Constants.defaultModel,
+                            model: String = Constants.model,
 							systemText: String = ChatGPTAPI.Constants.defaultSystemText,
-							temperature: Double = ChatGPTAPI.Constants.defaultTemperature) async throws -> Answer {
+							temperature: Double = 0.0) async throws -> Answer {
 		guard !offline else {
 			return Answer(string: "WebService: offline mode. To switch back to online, disable the offline property.", instruction: nil)
 		}

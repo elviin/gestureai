@@ -30,7 +30,7 @@ struct CaptureButtonFrameModifier: ViewModifier {
 						let controlAnnotation = ControlAnnotation(id: UUID(), frame: geometry.frame(in: .global),
 																  title: title, image: image, accessibility: accessibility,
 																  annotation: annotation, color: color?.accessibilityName, type: type, screen: screen)
-						print("annotation: frame=\(controlAnnotation.frame) annotation: \(controlAnnotation.annotation)")
+                        print("annotation: frame=\(controlAnnotation.frame) annotation: \(controlAnnotation.annotation) title=\(controlAnnotation.title ?? "")")
 						frameTracker.updateFrame(controlAnnotation, command: command)
 					}
 			})

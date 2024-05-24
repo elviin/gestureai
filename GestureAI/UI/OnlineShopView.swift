@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct OnlineShopView: View {
+    @EnvironmentObject var appState: AppState
 	@EnvironmentObject var webservice: WebService
 	@EnvironmentObject var frameTracker: GlobalFrameTracker
 	@State private var instructionsSent = false
@@ -32,7 +33,7 @@ struct OnlineShopView: View {
 					.padding()
 					.border(Color.gray, width: 1)
 					.padding([.leading, .trailing, .top])
-					.annotate(label: "Text field dedicated for searching items. Usually after commands related to search, or general requests to buy something that is not available on front the page. ", command: { value in
+					.annotate(label: "Text field dedicated for searching items. Usually after commands related to search, or general requests to buy something that is not available on the front page. ", command: { value in
 						guard case let .string(text) = value else { return }
 						searchText = text
 					}, type: .textField, screen: "Main")
@@ -63,36 +64,34 @@ struct OnlineShopView: View {
 				}
 			}
 			.navigationDestination(for: Item.self) { item in
-				ItemDetailView(item: item)
+                ItemDetailView(item: item)
 			}
 			.navigationBarTitle("LLM Online Shop")
-				// Programmatic Navigation Trigger
-				//			.background(
-				//				NavigationLink(destination: ItemDetailView(item: selectedItem ?? items.first!), isActive: $isProgrammaticNavigationActive) {
-				//					EmptyView()
-				//				}
-				//			)
 		}
-		.onAppear {
-				// Initialise the annotations
-			Task { @MainActor in
-				try await Task.sleep(for: .seconds(1.0))
-				do {
-					if instructionsSent == false {
-						instructionsSent = true
-
-						webservice.deleteHistoryList()
-						let response = try await webservice.sendMessage(text: frameTracker.defaultInstructions())
-						print("ChatGPT: \(response)")
-						let mapResponse = try await webservice.sendMessage(text: frameTracker.mapInstructions(screen: "Main"))
-						print("ChatGPT: \(mapResponse)")
-					}
-					let mapResponse = try await webservice.sendMessage(text: "You are now in the screen called: Main. Reply just 'OK - MAIN SCREEN'.")
-					print("ChatGPT: \(mapResponse)")
-				} catch {
-					print(error.localizedDescription)
-				}
-			}
-		}
+        .onChange(of: appState.needsRefresh) { needsRefresh in
+            if needsRefresh {
+                appState.needsRefresh = false
+                Task { @MainActor in
+                    try await Task.sleep(for: .seconds(1.0))
+                    do {
+                        let mapResponse = try await webservice.sendMessage(text: frameTracker.mapInstructions(screen: "Main"))
+                        print("ChatGPT: \(mapResponse)")
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        .onAppear() {
+            if !appState.needsRefresh {
+                appState.needsRefresh = true
+                Task { @MainActor in
+                    guard !appState.defaultInstructionsSet else { return }
+                    appState.defaultInstructionsSet = true
+                    let response = try await webservice.sendMessage(text: frameTracker.defaultInstructions())
+                    print("ChatGPT: \(response)")
+                }
+            }
+        }
 	}
 }
